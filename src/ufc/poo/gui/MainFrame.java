@@ -39,6 +39,8 @@ public class MainFrame extends JFrame {
         
         wrapperPanel.add(main, "main");
         wrapperPanel.add(login, "login");
+        wrapperPanel.revalidate();
+        wrapperPanel.repaint();
         
         cl.show(wrapperPanel, "login");
         

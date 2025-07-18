@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 import ufc.poo.database.DatabaseSet;
 import ufc.poo.itens.pecas.PecaSuperior;
@@ -15,19 +16,34 @@ import ufc.poo.itens.pecas.PecaSuperior;
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel {
 	public static DatabaseSet db; 
+	private Container parent;
+	
+    @Override
+    public void addNotify() {
+        super.addNotify();  // Ensure the default behavior happens
+        this.parent = getParent().getParent().getParent().getParent();
+        System.out.println(parent);
+        parent.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				if("setUser".equals(evt.getPropertyName())) {
+					System.out.println(evt.getNewValue().toString());
+					db = new DatabaseSet(evt.getNewValue().toString());
+				}
+			}
+		});
+    }
 	
 	public MainPanel() {
 		super();
 		
-		System.out.println(this.getParent());
-		Container parent = getParent().getParent(); // Tem um wrapper entre ele e o parent
+		/*Container parent = getParent().getParent(); // Tem um wrapper entre ele e o parent
 		parent.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if("setUser".equals(evt.getPropertyName())) {
 					db = new DatabaseSet(evt.getNewValue().toString());
 				}
 			}
-		});
+		});*/
 		
 		// Teria um desse pra cada tipo de peça, ai cria a respectiva peça dependendo da area que o usuario tiver usando, botar no toString de cada peça uma adição que diga que tipo de peça é
 		
@@ -68,6 +84,7 @@ public class MainPanel extends JPanel {
 				e1.printStackTrace();
 			}
 		});
+		this.add(add);
 		
 	}
 }
