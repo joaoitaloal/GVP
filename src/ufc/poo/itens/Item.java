@@ -1,10 +1,10 @@
 package ufc.poo.itens;
 
 public abstract class Item {
-	String cor;
-	String tamanho;
-	String conservacao;
-	String nome;
+	private String cor;
+	private String tamanho;
+	private String conservacao;
+	private String nome;
 	
 	public Item(String cor, String tamanho, String conservacao, String nome) {
 		this.cor = cor;
@@ -14,4 +14,7 @@ public abstract class Item {
 	}
 	
 	//Registrar item no banco? ou coloco isso no banco?
+	public String toString() {
+		return nome + ":" + tamanho + ":" + conservacao + ":";
+	}
 }
