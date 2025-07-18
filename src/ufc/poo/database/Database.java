@@ -31,7 +31,7 @@ public class Database {
         }
     }
     
-    public void appendString(String texto) throws Exception{
+    public void appendLine(String texto) throws Exception{
         try {
             FileWriter gravador = new FileWriter(db);
             for(char c : texto.toCharArray()) {
