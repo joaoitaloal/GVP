@@ -3,18 +3,12 @@ package ufc.poo.gui;
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.sql.SQLException;
 
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
-	//Se eu usar esse pcs em todos os frames vale criar uma classe separada pra padronizar legal
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
     
     public MainFrame(String titulo){
         super(titulo);
@@ -24,28 +18,46 @@ public class MainFrame extends JFrame {
         CardLayout cl = new CardLayout();
         wrapperPanel.setLayout(cl);
         
-        LoginPanel login = new LoginPanel();
-        login.addPropertyChangeListener(new PropertyChangeListener() {
+        MainPanel main = new MainPanel();
+        wrapperPanel.add(main, "main");
+        
+        ListPanel list = new ListPanel(this);
+        wrapperPanel.add(list, "list");
+        
+        EstatisticasPanel stats = new EstatisticasPanel(this);
+        wrapperPanel.add(stats, "stats");
+        
+        PropertyChangeListener listener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				if("curPanel".equals(evt.getPropertyName())) {
-					cl.show(wrapperPanel, evt.getNewValue().toString());
-				}else if("setUser".equals(evt.getPropertyName())) {
-					pcs.firePropertyChange("setUser", evt.getOldValue(), evt.getNewValue());
+				if("itensScreen".equals(evt.getPropertyName())) {
+					cl.show(wrapperPanel, "main");
+				}else if("outrosScreen".equals(evt.getPropertyName())) {
+					try {
+						list.reload();
+						cl.show(wrapperPanel, "list");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}else if("estatisticasScreen".equals(evt.getPropertyName())) {
+					try {
+						stats.reload();
+						cl.show(wrapperPanel, "stats");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-		});
+		};
+		
+		main.addPropertyChangeListener(listener);
+		list.addPropertyChangeListener(listener);
+		stats.addPropertyChangeListener(listener);
         
-        MainPanel main = new MainPanel();
-        
-        wrapperPanel.add(main, "main");
-        wrapperPanel.add(login, "login");
-        wrapperPanel.revalidate();
-        wrapperPanel.repaint();
-        
-        cl.show(wrapperPanel, "login");
+        cl.show(wrapperPanel, "main");
         
         setContentPane(wrapperPanel);
-        
+
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
     }

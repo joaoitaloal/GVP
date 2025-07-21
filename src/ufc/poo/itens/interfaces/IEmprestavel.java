@@ -1,9 +1,10 @@
 package ufc.poo.itens.interfaces;
 
-import ufc.poo.database.Database;
+import java.time.LocalDate;
 
 public interface IEmprestavel {
-	public void registrarEmprestimo(Database db);
-	public int quantidadeDeDiasDesdeOEmprestimo(Database db);
-	public void registrarDevolucao(Database db);
+	public void registrarEmprestimo(LocalDate data);
+	public int quantidadeDeDiasDesdeOEmprestimo();
+	public void registrarDevolucao(LocalDate data);
+	public LocalDate getEmprestimo();
 }
