@@ -1,8 +1,6 @@
 package ufc.poo.gui.components;
 
 import java.awt.GridLayout;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.time.LocalDate;
 import java.util.Vector;
 
@@ -14,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import ufc.poo.gui.EventPanel;
 import ufc.poo.itens.Item;
 import ufc.poo.itens.interfaces.IEmprestavel;
 import ufc.poo.itens.interfaces.ILavavel;
@@ -23,14 +22,9 @@ import ufc.poo.itens.pecas.PecaSuperior;
 import ufc.poo.itens.pecas.RoupaIntima;
 
 @SuppressWarnings("serial")
-public class ListItens extends JPanel {
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+public class ListItens extends EventPanel {
     private final int inputSize = 10;
     private Vector<Item> checked;
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
     
 	public ListItens(Vector<Item> itens) {
 		super();
@@ -65,7 +59,7 @@ public class ListItens extends JPanel {
 				}else {
 					checked.remove(item);
 				}
-				pcs.firePropertyChange("checkChange", null, checked.clone());
+				event.firePropertyChange("checkChange", null, checked.clone());
 			});
 			itemPanel.add(check);
 
@@ -108,29 +102,29 @@ public class ListItens extends JPanel {
 					case "PecaSuperior":
 						PecaSuperior sup = new PecaSuperior(corInput, tamanhoInput, conservacaoInput, nomeInput);
 						sup.setId(item.getId());
-						pcs.firePropertyChange("modify", null, sup);
+						event.firePropertyChange("modify", null, sup);
 						break;
 					case "PecaInferior":
 						PecaInferior inf = new PecaInferior(corInput, tamanhoInput, conservacaoInput, nomeInput);
 						inf.setId(item.getId());
-						pcs.firePropertyChange("modify", null, inf);
+						event.firePropertyChange("modify", null, inf);
 						break;
 					case "RoupaIntima":
 						RoupaIntima intim = new RoupaIntima(corInput, tamanhoInput, conservacaoInput, nomeInput);
 						intim.setId(item.getId());
-						pcs.firePropertyChange("modify", null, intim);
+						event.firePropertyChange("modify", null, intim);
 						break;
 					case "Acessorio":
 						Acessorio aces = new Acessorio(corInput, tamanhoInput, conservacaoInput, nomeInput);
 						aces.setId(item.getId());
-						pcs.firePropertyChange("modify", null, aces);
+						event.firePropertyChange("modify", null, aces);
 						break;
 				}
 			});
 			
 			JButton deletar = new JButton("Deletar");
 			deletar.addActionListener(e ->{
-				pcs.firePropertyChange("delete", null, item.getId());
+				event.firePropertyChange("delete", null, item.getId());
 			});
 			
 			itemPanel.add(salvar);
@@ -139,20 +133,20 @@ public class ListItens extends JPanel {
 			if(item instanceof IEmprestavel) {
 				JButton emprestar = new JButton("Emprestimo");
 				emprestar.addActionListener(e ->{
-					pcs.firePropertyChange("emprestimo", null, item);
+					event.firePropertyChange("emprestimo", null, item);
 				});
 				itemPanel.add(emprestar);
 				
 				JButton devolver = new JButton("Devolução");
 				devolver.addActionListener(e ->{
-					pcs.firePropertyChange("devolucao", null, item);
+					event.firePropertyChange("devolucao", null, item);
 				});
 				itemPanel.add(devolver);
 			}
 			if(item instanceof ILavavel) {
 				JButton lavar = new JButton("Lavar");
 				lavar.addActionListener(e ->{
-					pcs.firePropertyChange("lavagem", null, item);
+					event.firePropertyChange("lavagem", null, item);
 				});
 				itemPanel.add(lavar);
 			}

@@ -7,6 +7,10 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+import ufc.poo.gui.pages.EstatisticasPanel;
+import ufc.poo.gui.pages.ListPanel;
+import ufc.poo.gui.pages.MainPanel;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
     

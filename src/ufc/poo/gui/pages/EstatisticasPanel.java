@@ -1,4 +1,4 @@
-package ufc.poo.gui;
+package ufc.poo.gui.pages;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -14,14 +13,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ufc.poo.database.Estatisticas;
+import ufc.poo.gui.ReloadablePanel;
 import ufc.poo.gui.components.NavBar;
 import ufc.poo.itens.Item;
 import ufc.poo.itens.Look;
 
 @SuppressWarnings("serial")
-public class EstatisticasPanel extends JPanel {
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    
+public class EstatisticasPanel extends ReloadablePanel {
     GridBagConstraints gbc;
     
     private Vector<Item> itens;
@@ -29,10 +27,6 @@ public class EstatisticasPanel extends JPanel {
     private Vector<Look> looks;
     
     JPanel statsWrapper;
-    
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
     
 	public EstatisticasPanel(Component parent) {
 		super();
@@ -45,7 +39,7 @@ public class EstatisticasPanel extends JPanel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String evtName = evt.getPropertyName();
 				if("itensScreen".equals(evtName) || "outrosScreen".equals(evtName)) {
-					pcs.firePropertyChange(evtName, null, null);
+					event.firePropertyChange(evtName, null, null);
 				}
 			}
 		});

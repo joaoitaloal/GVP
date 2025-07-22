@@ -1,17 +1,16 @@
-package ufc.poo.gui;
+package ufc.poo.gui.pages;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import ufc.poo.gui.ReloadablePanel;
 import ufc.poo.gui.components.ListLavagens;
 import ufc.poo.gui.components.ListLooks;
 import ufc.poo.gui.components.NavBar;
@@ -19,19 +18,12 @@ import ufc.poo.itens.Item;
 import ufc.poo.itens.Look;
 
 @SuppressWarnings("serial")
-public class ListPanel extends JPanel {
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    
+public class ListPanel extends ReloadablePanel {
     private Vector<String> lavagens;
     private Vector<Look> looks;
     
     private JScrollPane scrollLavagens;
     private JScrollPane scrollLooks;
-    
-
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
     
 	public ListPanel(Component parent) {
 		super();
@@ -45,7 +37,7 @@ public class ListPanel extends JPanel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String evtName = evt.getPropertyName();
 				if("itensScreen".equals(evtName) || "estatisticasScreen".equals(evtName)) {
-					pcs.firePropertyChange(evtName, null, null);
+					event.firePropertyChange(evtName, null, null);
 				}
 			}
 		});

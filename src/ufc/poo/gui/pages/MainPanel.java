@@ -1,11 +1,10 @@
-package ufc.poo.gui;
+package ufc.poo.gui.pages;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -19,6 +18,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import ufc.poo.database.Database;
+import ufc.poo.gui.EventPanel;
 import ufc.poo.gui.components.InputNewItem;
 import ufc.poo.gui.components.ListItens;
 import ufc.poo.gui.components.NavBar;
@@ -28,8 +28,7 @@ import ufc.poo.itens.interfaces.IEmprestavel;
 import ufc.poo.itens.pecas.*;
 
 @SuppressWarnings("serial")
-public class MainPanel extends JPanel {
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+public class MainPanel extends EventPanel {
     
 	public static Database db;
 	private Vector<Item> itens;
@@ -37,10 +36,6 @@ public class MainPanel extends JPanel {
 	
 	private static ListItens listItens;
 	private static JScrollPane scroll;
-	
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
 	
 	public MainPanel() {
 		super();
@@ -68,7 +63,7 @@ public class MainPanel extends JPanel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				String evtName = evt.getPropertyName();
 				if("outrosScreen".equals(evtName) || "estatisticasScreen".equals(evtName)) {
-					pcs.firePropertyChange(evtName, null, null);
+					event.firePropertyChange(evtName, null, null);
 				}
 			}
 		});

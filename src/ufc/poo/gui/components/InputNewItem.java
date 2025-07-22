@@ -1,31 +1,23 @@
 package ufc.poo.gui.components;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import ufc.poo.gui.EventPanel;
 import ufc.poo.itens.pecas.Acessorio;
 import ufc.poo.itens.pecas.PecaInferior;
 import ufc.poo.itens.pecas.PecaSuperior;
 import ufc.poo.itens.pecas.RoupaIntima;
 
 @SuppressWarnings("serial")
-public class InputNewItem extends JPanel {
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+public class InputNewItem extends EventPanel {
     
 	private JTextField nomeI;
 	private JTextField corI;
 	private JTextField conservacaoI;
 	private JTextField tamanhoI;
-	
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        pcs.addPropertyChangeListener(listener);
-    }
 	
 	public InputNewItem(String tipo) {
 		super();
@@ -77,19 +69,19 @@ public class InputNewItem extends JPanel {
 			switch (tipo){
 				case "PecaSuperior":
 					PecaSuperior sup = new PecaSuperior(corInput, tamanhoInput, conservacaoInput, nomeInput);
-					pcs.firePropertyChange("addSup", null, sup);
+					event.firePropertyChange("addSup", null, sup);
 					break;
 				case "PecaInferior":
 					PecaInferior inf = new PecaInferior(corInput, tamanhoInput, conservacaoInput, nomeInput);
-					pcs.firePropertyChange("addInf", null, inf);
+					event.firePropertyChange("addInf", null, inf);
 					break;
 				case "RoupaIntima":
 					RoupaIntima intim = new RoupaIntima(corInput, tamanhoInput, conservacaoInput, nomeInput);
-					pcs.firePropertyChange("addInt", null, intim);
+					event.firePropertyChange("addInt", null, intim);
 					break;
 				case "Acessorio":
 					Acessorio aces = new Acessorio(corInput, tamanhoInput, conservacaoInput, nomeInput);
-					pcs.firePropertyChange("addAces", null, aces);
+					event.firePropertyChange("addAces", null, aces);
 					break;
 			}
 			

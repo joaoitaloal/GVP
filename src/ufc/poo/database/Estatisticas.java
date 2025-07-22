@@ -3,7 +3,7 @@ package ufc.poo.database;
 import java.sql.SQLException;
 import java.util.Vector;
 
-import ufc.poo.gui.MainPanel;
+import ufc.poo.gui.pages.MainPanel;
 import ufc.poo.itens.Item;
 import ufc.poo.itens.Look;
 import ufc.poo.itens.interfaces.IEmprestavel;

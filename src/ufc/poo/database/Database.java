@@ -17,8 +17,6 @@ import ufc.poo.itens.pecas.PecaInferior;
 import ufc.poo.itens.pecas.PecaSuperior;
 import ufc.poo.itens.pecas.RoupaIntima;
 
-// Isso é pra ser uma classe que gerencia um unico arquivo, a gente deve ter umas cinco dessas instanciadas por vez:
-//  uma pros usos de um look da pessoa x, uma pras lavagens da pessoa x, uma pra registrar emprestimos da pessoa, uma pra registrar itens da pessoa
 public class Database {
 	private Connection conn;
 	
